@@ -1,3 +1,17 @@
-<p class="text-center">
-  hauptteil works!
-</p>
+<!-- Suchbalken -->
+<div class=" row active-blue m-4 text-center">
+  <span class="col-4 m-auto">Suchbegriffe bitte eingeben --> </span>
+  <input [(ngModel)]="searchquery" (ngModelChange)="searchqueryUpdate()" class="col-8 form-control float-right" type="text" placeholder="Search" aria-label="Search">
+</div>
+
+<div class="row">
+
+  <div class="col-12 text-center">
+      <p>
+          hauptteil works!
+      </p>
+
+      <p>Searchquery: --> {{ cleanSearchquery }}</p>
+  </div>
+</div>
+
