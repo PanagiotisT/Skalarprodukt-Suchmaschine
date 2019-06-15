@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { KopfbereichComponent } from './kopfbereich/kopfbereich.component';
 import { HauptteilComponent } from './hauptteil/hauptteil.component';
 import { FormsModule } from '@angular/forms';
+import { SeiteComponent } from './seite/seite.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     KopfbereichComponent,
-    HauptteilComponent
+    HauptteilComponent,
+    SeiteComponent
   ],
   imports: [
     BrowserModule,
