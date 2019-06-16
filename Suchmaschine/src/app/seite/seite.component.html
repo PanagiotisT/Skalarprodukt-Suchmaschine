@@ -1,14 +1,13 @@
-<div class="row">
-  <div class="col-3">
-    <p class="text-center">Seite: {{ seitenInfos.id }}</p>
-  </div>
-
-  <div class="col-6">
-    <p>SeitenInhalt: {{ seitenInfos.inhalt }}</p>
-  </div>
-
-  <div class="col-3">
-    <p>Übereinstimmung: {{ seitenInfos.treffer }}%</p>
+<div class="row m-5 ">
+  <div class="card col-12">
+    <div class="card-body">
+      <h5 class="card-title">Seite: {{ seitenInfos.id + 1 }}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">SeitenInhalt:</h6>
+      <p class="card-text">{{ seitenInfos.inhalt }}</p>
+      <p class="text-right">Übereinstimmung: {{ seitenInfos.uebereinstimumng }}%</p>
+    </div>
   </div>
 </div>
+
+
 

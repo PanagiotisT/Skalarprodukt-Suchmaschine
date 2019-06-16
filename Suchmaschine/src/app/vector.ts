@@ -2,19 +2,6 @@ export class Vector {
 
     private values;
 
-    get x(){
-        return this.values[0]
-    }
-
-    get y(){
-        return this.values[1]
-    }
-
-    set xy(values: [number, number]) {
-        this.values[0] = values[0]
-        this.values[1] = values[1]
-    }
-
     constructor(values?: number[]) {
 
         this.values = new Int32Array(values.length)
@@ -24,6 +11,7 @@ export class Vector {
         }
     }
 
+    // Länge der Vektoren vergleichen
     checkLength(v1: Vector, v2: Vector) {
         if(v1.values.length == v2.values.length){
             console.log('Vektoren sind gleichlang!')
@@ -36,6 +24,7 @@ export class Vector {
         }
     }
 
+    // Skalarprodukt berechnen
     skalarprodukt(v1: Vector, v2: Vector){
         let skalar = 0
 
@@ -49,6 +38,7 @@ export class Vector {
             console.log('Vektoren überprüfen')}
     }
 
+    // Winkel zwischen zwei Vektoren berechnen
     getAngle(v1: Vector, v2: Vector){
         let angle = 0
 
@@ -62,18 +52,18 @@ export class Vector {
             // Winkel berechnen; Ausgabe Radiant
             angle = skalar / (betragv1 * betragv2)
 
-            // Radiant umwandeln in grad
-            if(this.toDegree(Math.acos(angle)) == NaN){
-                return 0
+            // Radiant umwandeln in grad wenn ergebniss NaN ist 0 zurück geben = kein treffer
+            // Ansonsten rechne cos von dem Winkel aus = Trefferquote
+            if (Number.isNaN(this.toDegree(Math.acos(angle)))){
+                return 0;
             }else{
                let winkel = Math.acos(angle)
-               console.log(winkel)
-               console.log(this.toDegree(winkel))
-               return Math.cos(winkel).toFixed(2)
+               return Number(Math.cos(winkel).toFixed(2)) * 100
             }
         }
     }
 
+    // Länge eines Vektors berechnen
     laenge(){
         let betrag = 0;
 
@@ -83,6 +73,7 @@ export class Vector {
         return betrag;
     }
 
+    // Radiant ergebnis in degree umwandeln
     toDegree(radians: number) {
         return (radians * 180 / Math.PI)
     }

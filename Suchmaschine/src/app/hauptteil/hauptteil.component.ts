@@ -10,44 +10,43 @@ import { SEITE } from '../seiten';
   styleUrls: ['./hauptteil.component.css']
 })
 export class HauptteilComponent implements OnInit {
+  // Beispielseiten
+  seiten: Seite[] = SEITE;
 
   // Searchquery
   searchquery: string;
   cleanSearchquery: string;
 
-  // Später Vektor Suchanfrage und Vektor SeitenInhalte
+  // Suchanfrage Vektor
   suchanfragenVektor: Vector
-  seitenVektoren: Vector
-
-  // Beispielseiten
-  seiten: Seite[] = SEITE;
+  vector: Vector;
 
   // Array mit allen Wörtern von jeder Seite
+  // Wird später in einen Vektor umgewandelt und anschließend
+  // mit dem Suchvektor verglichen
   indexArray: string[];
 
-  // Array mit Arrays lel
+  // Enthält die Wörter jeder Seite Sortiert
+  // Beispiel index 0 ist die Seite 0 dort sind alle Wörter enthalten die auf der Seite vorkommen 
   seitenInhalte: string[][]
 
-  // Map mit index der Seiten und Vektor der jeweiligen Seite
-  vectorMap = new Map(); 
+  // Array mit Nummern Array um später daraus Vektoren zu erstellen
   vectorArray: number[][]
-
-  vectorObject = {}
 
   constructor() { }
 
   ngOnInit() {
 
+    // Variablen initialisieren damit mit push Inhalte reingespeichert werden können
     this.indexArray = [];
     this.seitenInhalte = []
     this.vectorArray = []
+    this.vector = new Vector([0])
 
-    //OnInit Vektoren erstellen für jede Seite
-
-    // Seiten durchgehen vorkommene Wörter in ein Array schreiben
+    // Alle Seiten durchgehen vorkommene Wörter in ein Array schreiben
     this.seiten.forEach( (seite) => {
 
-      // Symbole aus den Wörtern entfernen
+      // Symbole aus den Wörtern entfernen in diesem Fall , und .
       let inhaltCleaned = this.containsSymbol(seite.inhalt.toLowerCase(), [',' , '\\.'])
 
       // Seiteninhalt in einzelne Wörter umwandeln und in array packen wenn sie noch nicht drin sind
@@ -55,21 +54,27 @@ export class HauptteilComponent implements OnInit {
       // Seiteninhalte speichern für späteren zugriff
       this.seitenInhalte.push(inhaltSplitted)
 
-      // ------------------------------------------------------------------------------------------------------------------------
-      // Hier später die Wörter Filtern oder Weiter oben also Wörter wie z.B ist, mit usw. entfernen nur Wörter mit Aussagekraft inkludieren
+      // --------------------------
+      // Später nur Wörter im index speichern die Aussagekraft haben 
+      // also wörter wie z.b ist was und weglassen
+      // --------------------------
 
+      // Hier werden alle Wörter gespeichert die vorkommen aber nur einmal.
+      // Wenn das wort "Java" auf mehreren Seiten vorkommt, dann wird es nur einmal gespeichert im Index
       inhaltSplitted.forEach( (wort) => {
+        // Wenn das Wort noch nicht im Indexarray ist schreib es rein ansonsten mache nichts
         if(!this.indexArray.includes(wort)){
           this.indexArray.push(wort)
         }
       })
+
     })
 
+    // Alle Seiten nochmal durchgehen um einen Vektor für jede Seite zu erstellen.
     this.seiten.forEach( (seite) => {
       let vektorParameter = []
 
-      // Vektor für die Seiten erstellen | Wenn wort enthalten ist schreibe eine 1 an der stelle für den Vektor ansonsten 0
-      // Map erstellen index der Seite und den Vektor um später darauf zuzugreifen
+      // Wenn das wort aus dem indexArray enthalten ist schreibe eine 1 an der stelle für den Vektor ansonsten 0
       this.indexArray.forEach((wort) => {
         if(this.seitenInhalte[seite.id].includes(wort)) {
           vektorParameter.push(1)
@@ -78,36 +83,34 @@ export class HauptteilComponent implements OnInit {
         }
       })
 
-      // Vektor erstellen und der Map hinzufügen
-      let vektor = new Vector(vektorParameter)
-      this.vectorMap.set(seite.id, vektor)
-
+      // Vektor erstellen und dem Array hinzufügen
       this.vectorArray.push(vektorParameter)
-      console.log(this.vectorArray)
     })
 
-    // Hier stehen alle Wörter die auf jeder Seite vorkommen hierdraus werden die Vektoren erstellt.
-    console.log(this.vectorMap)
+    // Vektoren aller Seiten
+    console.log(this.vectorArray)
+
+    // Alle vorkommenden Wörter
     console.log(this.indexArray)
-
-   // console.log(this.vectorArray)
-
   }
 
+  // Wird aufgerufen sobald eine neue Usereingabe stattfindet
   searchqueryUpdate() {
+
     // Überprüfen ob searchquery symbole enthält wie z.b ?!,:; etc.. Falls ja Symbole entfernen
     let symbole = ['\\?' , '!' , ',' , ';', "  "]
 
-    //console.log(`Vor der Überprüfung:  ${this.searchquery}`)
+    // Speichere "sauberen" searchquery in eine neue variable
     this.cleanSearchquery = this.containsSymbol(this.searchquery.toLowerCase(), symbole)
-    // console.log(`Nach der Überprüfung:  ${this.cleanSearchquery}`)
+
+    // Alle eingegebenen Wörter werden in einem string array gespeichert
     let woerter = this.cleanSearchquery.trim().split(" ")
-    // console.log(woerter)
-    // console.log(`Wörter gesplittet: ${woerter}. Es gibt ${woerter.length} Wörter.`)
-  
-    // Vektor für die Suchanfrage erstellen | Wenn wort enthalten ist schreiobe eine 1 an der stelle für den Vektor ansonsten 0
+ 
+    // Vektor für die Suchanfrage erstellen
     let vektroparameter = []
 
+    // Überprüfe Ob eingegebene Wörter im IndexArray stehen
+    // Wenn ja schreibe eine 1 an die Stelle ansonsten eine 0
     this.indexArray.forEach((wort) => {
       if(woerter.includes(wort)){
         vektroparameter.push(1)
@@ -117,28 +120,47 @@ export class HauptteilComponent implements OnInit {
     })
 
     this.suchanfragenVektor = new Vector(vektroparameter)
-
     console.log(this.suchanfragenVektor)
-
-    // Für Jeden Eintrag in der Map den Winkel zwischen Map eintrag und Suchanfrage ausrechnen und sortieren nach Trefferquote
     
-    // Seitentrefferquote hier Anpassen
-    // Wie kann ich die Sortieren? Am besten hier Sortieren und dann eine Kopie übergeben, welche schon sortiert ist dann kann das nacheinander angezeigt werden
-    // SeitenArray kopieren 
-    // Suchanfragen Vektor mit allen Vektoren in der Map vergleichen
-
-    let rechnen = new Vector([0,0,0])
-
-
-    let i = 0
-    this.vectorArray.forEach( (vektor) => {
-      // Gibt für jeden vector der Seite den Winkel zurück um in Übereinstimmung umzuwandeln Cosinus benutzen
-      this.seiten[i].treffer = Number(rechnen.getAngle(this.suchanfragenVektor,new Vector(vektor)))
-      i++;
-    })
-
+    //Winkel zwischen Suchvektor rund Seitenvektoren berechnen und Seiten sortieren
+    this.sortSites()
   }
 
+  sortSites() {
+
+    console.log("aufgerufen")
+
+    // Alle Seitenvektoren durchgehen
+    let i = 0;
+    this.vectorArray.forEach((vektor) => {
+      // Winkel zwischen Suchvektor und Seitenvektor ausrechnen
+      // Destso kleiner der Winkel destso höher die Übereinstimmung
+      let uebereinstimung = Number(this.vector.getAngle(this.suchanfragenVektor, new Vector(vektor)))
+
+      // Wenn Suchvektor 0 ist also kein Wort in de nSeiten enthalten ist dann gebe 0 zurück
+      // Ansonsten schreibe die übreinstimmung in die jeweilige Seite
+      if (Number.isNaN(uebereinstimung)) {
+        this.seiten[i].uebereinstimumng = 0
+      } else {
+        this.seiten[i].uebereinstimumng = Number(uebereinstimung.toFixed(2))
+      }
+
+      i++
+    })
+
+    // Sortiere die Seiten nach der Übereinstimmung
+    // Je höher die Übereinstimmung destso höher ist die Seite
+    let byTreffer = this.seiten.slice(0)
+    byTreffer.sort((a, b) => {
+      return a.uebereinstimumng > b.uebereinstimumng ? -1 : b.uebereinstimumng > a.uebereinstimumng ? 1 : 0;
+    })
+
+    // Überschreibe die Seiten mit dem Sortierten Seiten
+    this.seiten = byTreffer;
+  }
+
+
+  // Diese Funktion entfernt Symbole wie z.B ?, !, . , ; usw. aus dem searchquery 
   containsSymbol(target: string, pattern: string[]) {
 
     // Führe die Funktion aus, wenn was im target string steht
