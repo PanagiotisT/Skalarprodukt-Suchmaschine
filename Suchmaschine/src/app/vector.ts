@@ -63,7 +63,14 @@ export class Vector {
             angle = skalar / (betragv1 * betragv2)
 
             // Radiant umwandeln in grad
-            return this.toDegree(Math.acos(angle))
+            if(this.toDegree(Math.acos(angle)) == NaN){
+                return 0
+            }else{
+               let winkel = Math.acos(angle)
+               console.log(winkel)
+               console.log(this.toDegree(winkel))
+               return Math.cos(winkel).toFixed(2)
+            }
         }
     }
 
@@ -77,6 +84,6 @@ export class Vector {
     }
 
     toDegree(radians: number) {
-        return (radians * 180 / Math.PI).toFixed(2)
+        return (radians * 180 / Math.PI)
     }
 }
