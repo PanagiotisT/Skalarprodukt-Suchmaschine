@@ -44,8 +44,11 @@ export class Vector {
 
         // Teile der Funktion berechnen
         let skalar = this.skalarprodukt(v1, v2)
+        console.log(skalar)
         let betragv1 = Math.sqrt(v1.laenge())
+        console.log(betragv1)
         let betragv2 = Math.sqrt(v2.laenge())
+        console.log(betragv2)
 
         // Wenn beide Vektoren gleichgroß sind den Winkel berechnen
         if(this.checkLength(v1,v2)){

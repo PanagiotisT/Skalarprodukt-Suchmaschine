@@ -12,6 +12,7 @@ import { SEITE } from '../seiten';
 export class HauptteilComponent implements OnInit {
   // Beispielseiten
   seiten: Seite[] = SEITE;
+  byTreffer: Seite[];
 
   // Searchquery
   searchquery: string;
@@ -42,6 +43,12 @@ export class HauptteilComponent implements OnInit {
     this.seitenInhalte = []
     this.vectorArray = []
     this.vector = new Vector([0])
+    this.byTreffer = []
+
+    // copy array 
+    this.seiten.forEach( (site) => {
+      this.byTreffer.push(site)
+    })
 
     // Alle Seiten durchgehen vorkommene Wörter in ein Array schreiben
     this.seiten.forEach( (seite) => {
@@ -121,9 +128,24 @@ export class HauptteilComponent implements OnInit {
 
     this.suchanfragenVektor = new Vector(vektroparameter)
     console.log(this.suchanfragenVektor)
+
+    let numbers = []
+    this.vectorArray[1].forEach ( (el) => {
+      numbers.push(el);
+    })
+
+    // Test
+    // ----------------------------------- 
+    // console.log(numbers)
+
+    // let erg = this.vector.getAngle(this.suchanfragenVektor, new Vector(numbers))
+    // console.log(erg)
+
+    // ----------------------------------- 
     
     //Winkel zwischen Suchvektor rund Seitenvektoren berechnen und Seiten sortieren
     this.sortSites()
+    
   }
 
   sortSites() {
@@ -131,16 +153,17 @@ export class HauptteilComponent implements OnInit {
     console.log("aufgerufen")
 
     // Alle Seitenvektoren durchgehen
-    let i = 0;
-    this.vectorArray.forEach((vektor) => {
+    this.vectorArray.forEach((vektor, i) => {
       // Winkel zwischen Suchvektor und Seitenvektor ausrechnen
       // Destso kleiner der Winkel destso höher die Übereinstimmung
-      let uebereinstimung = Number(this.vector.getAngle(this.suchanfragenVektor, new Vector(vektor)))
+      let uebereinstimung = this.vector.getAngle(this.suchanfragenVektor, new Vector(vektor))
+      console.log(uebereinstimung)
 
       // Wenn Suchvektor 0 ist also kein Wort in de nSeiten enthalten ist dann gebe 0 zurück
       // Ansonsten schreibe die übreinstimmung in die jeweilige Seite
       if (Number.isNaN(uebereinstimung)) {
         this.seiten[i].uebereinstimumng = 0
+        console.log(this.seiten[i].uebereinstimumng)
       } else {
         this.seiten[i].uebereinstimumng = Number(uebereinstimung.toFixed(2))
       }
@@ -150,15 +173,14 @@ export class HauptteilComponent implements OnInit {
 
     // Sortiere die Seiten nach der Übereinstimmung
     // Je höher die Übereinstimmung destso höher ist die Seite
-    let byTreffer = this.seiten.slice(0)
-    byTreffer.sort((a, b) => {
+    //this.byTreffer = this.seiten.slice(0)
+    this.byTreffer.sort((a, b) => {
       return a.uebereinstimumng > b.uebereinstimumng ? -1 : b.uebereinstimumng > a.uebereinstimumng ? 1 : 0;
     })
 
     // Überschreibe die Seiten mit dem Sortierten Seiten
-    this.seiten = byTreffer;
+    console.log(this.byTreffer)
   }
-
 
   // Diese Funktion entfernt Symbole wie z.B ?, !, . , ; usw. aus dem searchquery 
   containsSymbol(target: string, pattern: string[]) {
