@@ -1,1 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+
+.textEffect {
+    color: #999;
+    text-shadow: 0px 1px 1.5px #555;
+    font: Helvetica, Arial, Sans-Serif;
+}

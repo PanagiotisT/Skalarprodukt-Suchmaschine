@@ -1,11 +1,18 @@
-<div class="row m-5 ">
-  <div class="card col-12">
-    <div class="card-body">
+<div class="card m-5 ">
+  <div class="row card-body">
+
+    <!-- Linke Seite der Karte: Seite x und der Inhalt -->
+    <div class="col-10">
       <h5 class="card-title">Seite: {{ seitenInfos.id + 1 }}</h5>
       <h6 class="card-subtitle mb-2 text-muted">SeitenInhalt:</h6>
       <p class="card-text">{{ seitenInfos.inhalt }}</p>
-      <p class="text-right">Übereinstimmung: {{ seitenInfos.uebereinstimumng }}%</p>
     </div>
+
+    <!-- Rechts die Trefferquote -->
+    <div class="col-2 m-auto text-right">
+          <h1 class=" textEffect">{{ seitenInfos.uebereinstimumng }}%</h1>
+    </div>
+
   </div>
 </div>
 
