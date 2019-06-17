@@ -167,8 +167,6 @@ export class HauptteilComponent implements OnInit {
       } else {
         this.seiten[i].uebereinstimumng = Number(uebereinstimung.toFixed(2))
       }
-
-      i++
     })
 
     // Sortiere die Seiten nach der Übereinstimmung
