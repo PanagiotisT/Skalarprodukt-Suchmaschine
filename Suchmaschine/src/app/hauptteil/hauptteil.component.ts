@@ -15,8 +15,12 @@ export class HauptteilComponent implements OnInit {
   byTreffer: Seite[];
 
   // Searchquery
+  woerter: string[];
   searchquery: string;
   cleanSearchquery: string;
+
+  // Infos anzeigen
+  anzeigen: boolean;
 
   // Suchanfrage Vektor
   suchanfragenVektor: Vector
@@ -39,6 +43,7 @@ export class HauptteilComponent implements OnInit {
   ngOnInit() {
 
     // Variablen initialisieren damit mit push Inhalte reingespeichert werden können
+    this.anzeigen = false;
     this.indexArray = [];
     this.seitenInhalte = []
     this.vectorArray = []
@@ -111,7 +116,7 @@ export class HauptteilComponent implements OnInit {
     this.cleanSearchquery = this.containsSymbol(this.searchquery.toLowerCase(), symbole)
 
     // Alle eingegebenen Wörter werden in einem string array gespeichert
-    let woerter = this.cleanSearchquery.trim().split(" ")
+    this.woerter = this.cleanSearchquery.trim().split(" ")
  
     // Vektor für die Suchanfrage erstellen
     let vektroparameter = []
@@ -119,7 +124,7 @@ export class HauptteilComponent implements OnInit {
     // Überprüfe Ob eingegebene Wörter im IndexArray stehen
     // Wenn ja schreibe eine 1 an die Stelle ansonsten eine 0
     this.indexArray.forEach((wort) => {
-      if(woerter.includes(wort)){
+      if(this.woerter.includes(wort)){
         vektroparameter.push(1)
       }else{
         vektroparameter.push(0)
@@ -192,6 +197,10 @@ export class HauptteilComponent implements OnInit {
       });
       return target
     }
+  }
+
+  switchAnzeigen(){
+    this.anzeigen = !this.anzeigen;
   }
 
 }
