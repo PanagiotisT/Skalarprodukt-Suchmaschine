@@ -7,21 +7,8 @@
           class="form-control" type="text" placeholder="Suchanfrage eingeben..." aria-label="Search">
 
     <!-- Pfeil zu Anzeigen der Informationen -->
-    <i (click)="switchAnzeigen()" [className]="anzeigen ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>
+    <app-show-details [woerter]=woerter></app-show-details>
     
-  </div>
-</div>
-
-<div *ngIf="anzeigen" class="row">
-
-  <div class="col-3 text-center">
-  
-  </div>
-    
-  <div class="col-9">
-    <div class="col-2">
-      <span class="mx-2 border border-secondary rounded p-1" *ngFor="let wort of woerter">{{ wort }}</span>
-    </div>
   </div>
 </div>
 

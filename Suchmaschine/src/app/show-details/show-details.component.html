@@ -1,0 +1,13 @@
+<i (click)="switchAnzeigen()" [className]="anzeigen ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>
+
+<div *ngIf="anzeigen" class="row">
+
+  <div class="col-6">
+    was passiert jetzt?
+  </div>
+
+  <div class="col-6">
+    <p class="border border-secondary rounded p-1" *ngFor="let wort of woerter">{{ wort }}</p>
+  </div>
+
+</div>

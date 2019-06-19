@@ -11,25 +11,22 @@ import { SEITE } from '../seiten';
 })
 export class HauptteilComponent implements OnInit {
   // Beispielseiten
-  seiten: Seite[] = SEITE;
-  byTreffer: Seite[];
+  seiten: Seite[] = SEITE
+  byTreffer: Seite[]
 
   // Searchquery
-  woerter: string[];
-  searchquery: string;
-  cleanSearchquery: string;
-
-  // Infos anzeigen
-  anzeigen: boolean;
+  woerter: string[]
+  searchquery: string
+  cleanSearchquery: string
 
   // Suchanfrage Vektor
   suchanfragenVektor: Vector
-  vector: Vector;
+  vector: Vector
 
   // Array mit allen Wörtern von jeder Seite
   // Wird später in einen Vektor umgewandelt und anschließend
   // mit dem Suchvektor verglichen
-  indexArray: string[];
+  indexArray: string[]
 
   // Enthält die Wörter jeder Seite Sortiert
   // Beispiel index 0 ist die Seite 0 dort sind alle Wörter enthalten die auf der Seite vorkommen 
@@ -43,8 +40,7 @@ export class HauptteilComponent implements OnInit {
   ngOnInit() {
 
     // Variablen initialisieren damit mit push Inhalte reingespeichert werden können
-    this.anzeigen = false;
-    this.indexArray = [];
+    this.indexArray = []
     this.seitenInhalte = []
     this.vectorArray = []
     this.vector = new Vector([0])
@@ -136,7 +132,7 @@ export class HauptteilComponent implements OnInit {
 
     let numbers = []
     this.vectorArray[1].forEach ( (el) => {
-      numbers.push(el);
+      numbers.push(el)
     })
 
     // Test
@@ -197,10 +193,6 @@ export class HauptteilComponent implements OnInit {
       });
       return target
     }
-  }
-
-  switchAnzeigen(){
-    this.anzeigen = !this.anzeigen;
   }
 
 }

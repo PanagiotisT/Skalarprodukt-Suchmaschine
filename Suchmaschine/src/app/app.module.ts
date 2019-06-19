@@ -7,13 +7,15 @@ import { KopfbereichComponent } from './kopfbereich/kopfbereich.component';
 import { HauptteilComponent } from './hauptteil/hauptteil.component';
 import { FormsModule } from '@angular/forms';
 import { SeiteComponent } from './seite/seite.component';
+import { ShowDetailsComponent } from './show-details/show-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     KopfbereichComponent,
     HauptteilComponent,
-    SeiteComponent
+    SeiteComponent,
+    ShowDetailsComponent
   ],
   imports: [
     BrowserModule,
