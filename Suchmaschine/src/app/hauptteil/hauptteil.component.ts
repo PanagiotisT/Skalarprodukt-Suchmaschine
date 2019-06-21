@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Vector } from '../vector';
+import { ShowDetailsComponent } from '../show-details/show-details.component'
 
 import { Seite } from '../seite';
 import { SEITE } from '../seiten';
@@ -10,12 +11,15 @@ import { SEITE } from '../seiten';
   styleUrls: ['./hauptteil.component.css']
 })
 export class HauptteilComponent implements OnInit {
+  @ViewChild(ShowDetailsComponent) child: ShowDetailsComponent;
+
   // Beispielseiten
   seiten: Seite[] = SEITE
   byTreffer: Seite[]
 
   // Searchquery
   woerter: string[]
+  woerterAnzeigen: []
   searchquery: string
   cleanSearchquery: string
 
@@ -45,17 +49,18 @@ export class HauptteilComponent implements OnInit {
     this.vectorArray = []
     this.vector = new Vector([0])
     this.byTreffer = []
+    this.woerterAnzeigen = []
 
     // copy array 
-    this.seiten.forEach( (site) => {
+    this.seiten.forEach((site) => {
       this.byTreffer.push(site)
     })
 
     // Alle Seiten durchgehen vorkommene Wörter in ein Array schreiben
-    this.seiten.forEach( (seite) => {
+    this.seiten.forEach((seite) => {
 
       // Symbole aus den Wörtern entfernen in diesem Fall , und .
-      let inhaltCleaned = this.containsSymbol(seite.inhalt.toLowerCase(), [',' , '\\.'])
+      let inhaltCleaned = this.containsSymbol(seite.inhalt.toLowerCase(), [',', '\\.'])
 
       // Seiteninhalt in einzelne Wörter umwandeln und in array packen wenn sie noch nicht drin sind
       let inhaltSplitted = inhaltCleaned.trim().split(" ")
@@ -69,9 +74,9 @@ export class HauptteilComponent implements OnInit {
 
       // Hier werden alle Wörter gespeichert die vorkommen aber nur einmal.
       // Wenn das wort "Java" auf mehreren Seiten vorkommt, dann wird es nur einmal gespeichert im Index
-      inhaltSplitted.forEach( (wort) => {
+      inhaltSplitted.forEach((wort) => {
         // Wenn das Wort noch nicht im Indexarray ist schreib es rein ansonsten mache nichts
-        if(!this.indexArray.includes(wort)){
+        if (!this.indexArray.includes(wort)) {
           this.indexArray.push(wort)
         }
       })
@@ -79,14 +84,14 @@ export class HauptteilComponent implements OnInit {
     })
 
     // Alle Seiten nochmal durchgehen um einen Vektor für jede Seite zu erstellen.
-    this.seiten.forEach( (seite) => {
+    this.seiten.forEach((seite) => {
       let vektorParameter = []
 
       // Wenn das wort aus dem indexArray enthalten ist schreibe eine 1 an der stelle für den Vektor ansonsten 0
       this.indexArray.forEach((wort) => {
-        if(this.seitenInhalte[seite.id].includes(wort)) {
+        if (this.seitenInhalte[seite.id].includes(wort)) {
           vektorParameter.push(1)
-        }else {
+        } else {
           vektorParameter.push(0)
         }
       })
@@ -100,29 +105,30 @@ export class HauptteilComponent implements OnInit {
 
     // Alle vorkommenden Wörter
     console.log(this.indexArray)
+
   }
 
   // Wird aufgerufen sobald eine neue Usereingabe stattfindet
   searchqueryUpdate() {
 
     // Überprüfen ob searchquery symbole enthält wie z.b ?!,:; etc.. Falls ja Symbole entfernen
-    let symbole = ['\\?' , '!' , ',' , ';', "  "]
+    let symbole = ['\\?', '!', ',', ';', "  "]
 
     // Speichere "sauberen" searchquery in eine neue variable
     this.cleanSearchquery = this.containsSymbol(this.searchquery.toLowerCase(), symbole)
 
     // Alle eingegebenen Wörter werden in einem string array gespeichert
     this.woerter = this.cleanSearchquery.trim().split(" ")
- 
+
     // Vektor für die Suchanfrage erstellen
     let vektroparameter = []
 
     // Überprüfe Ob eingegebene Wörter im IndexArray stehen
     // Wenn ja schreibe eine 1 an die Stelle ansonsten eine 0
     this.indexArray.forEach((wort) => {
-      if(this.woerter.includes(wort)){
+      if (this.woerter.includes(wort)) {
         vektroparameter.push(1)
-      }else{
+      } else {
         vektroparameter.push(0)
       }
     })
@@ -131,7 +137,7 @@ export class HauptteilComponent implements OnInit {
     console.log(this.suchanfragenVektor)
 
     let numbers = []
-    this.vectorArray[1].forEach ( (el) => {
+    this.vectorArray[1].forEach((el) => {
       numbers.push(el)
     })
 
@@ -143,10 +149,19 @@ export class HauptteilComponent implements OnInit {
     // console.log(erg)
 
     // ----------------------------------- 
-    
+
     //Winkel zwischen Suchvektor rund Seitenvektoren berechnen und Seiten sortieren
     this.sortSites()
-    
+
+    // Überprüfe welches eingegebene wort im index existiert
+    this.woerter.forEach((wort) => {
+      if (this.indexArray.includes(wort)) {
+        this.woerterAnzeigen[wort] = true
+      }
+    })
+
+    console.log(this.woerter)
+
   }
 
   sortSites() {
@@ -179,17 +194,18 @@ export class HauptteilComponent implements OnInit {
 
     // Überschreibe die Seiten mit dem Sortierten Seiten
     console.log(this.byTreffer)
+    console.log(this.woerterAnzeigen)
   }
 
   // Diese Funktion entfernt Symbole wie z.B ?, !, . , ; usw. aus dem searchquery 
   containsSymbol(target: string, pattern: string[]) {
 
     // Führe die Funktion aus, wenn was im target string steht
-    if(target != undefined){
-      
-      pattern.forEach( (element) => {
+    if (target != undefined) {
+
+      pattern.forEach((element) => {
         // Wenn eins der Symbole ethalten ist entferne es
-        target = target.replace(new RegExp(element, 'g'), '')       
+        target = target.replace(new RegExp(element, 'g'), '')
       });
       return target
     }

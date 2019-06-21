@@ -1,14 +1,14 @@
 <!-- Suchbalken -->
 <div class="row active-blue my-4 mx-1 text-center">
- 
+
   <div class="col-9 m-auto">
     <!-- Suchbalken -->
-    <input [(ngModel)]="searchquery" (ngModelChange)="searchqueryUpdate()" 
-          class="form-control" type="text" placeholder="Suchanfrage eingeben..." aria-label="Search">
+    <input [(ngModel)]="searchquery" (ngModelChange)="searchqueryUpdate() " class="form-control" type="text"
+      placeholder="Suchanfrage eingeben..." aria-label="Search">
 
     <!-- Pfeil zu Anzeigen der Informationen -->
-    <app-show-details [woerter]=woerter></app-show-details>
-    
+    <app-show-details [woerter]="woerter"></app-show-details>
+
   </div>
 </div>
 
