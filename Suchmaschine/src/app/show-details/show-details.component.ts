@@ -10,19 +10,18 @@ export class ShowDetailsComponent implements OnInit {
   // Infos anzeigen
   anzeigen: boolean
 
-  // Prüfen ob Wort im Vector ist
-  isInVector: boolean
-
+  // Woerte rdie eingegeben wurden entgegen nehmen
   @Input() woerter: string[]
+
+  //Steht was im Suchquery drin?
+  @Input() isEmpty: boolean
 
   objectKeys = Object.keys
 
   constructor() { }
 
   ngOnInit() {
-    this.anzeigen = false
-    console.log(this.woerter)
-
+    this.anzeigen = true
   }
 
   switchAnzeigen() {

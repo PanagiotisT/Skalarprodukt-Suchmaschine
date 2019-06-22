@@ -2,17 +2,30 @@
 <i (click)="switchAnzeigen()" [className]="anzeigen ? 'fas fa-chevron-up' : 'fas fa-chevron-down'"></i>
 
 <!-- InfoBox -->
-<div *ngIf="anzeigen" class="row my-3">
+<div *ngIf="anzeigen">
+  <hr>
+  <div class="row my-3">
 
-  <div class="col-xs-12 col-lg-6 mb-3">
-    Die eingegebenen Suchwörter werden rechts mit einer Umrandung angezeigt.
+    <!-- Informationen wie Suchwörter angezeigt werden -->
+    <div class="col-xs-12 col-lg-6 mb-2">
+      Die eingegebenen Suchwörter werden mit einer Umrandung angezeigt.<br>
+      <span><span class="badge badge-success">Wort ist enthalten</span>&nbsp;</span>
+      <span><span class="badge badge-danger">Wort ist nicht enthalten</span>&nbsp;</span>
+    </div>
+
+    <hr>
+
+    <!-- Suchwörter mit entsprechender Formatierung anzeigen -->
+    <div class="col-xs-12 col-lg-6 mt-2">
+      <!--  2 Span um Problem zu lösen, dass kein whitespace zwischen den badges ist -->
+      <!-- Mit woerter[key] value anzeigen -->
+      <div  *ngIf="!isEmpty" >
+        <span *ngFor="let key of objectKeys(woerter)"> <span
+            [className]="woerter[key] ? 'd-inline-block badge badge-success' : 'd-inline-block badge  badge-danger'">{{key}}</span>
+          &nbsp;</span>
+      </div>
+    </div>
+
   </div>
-
-  <div class="col-xs-12 col-lg-6">
-    <!--  2 Span um Problem zu lösen, dass kein whitespace zwischen den badges ist -->
-    <span *ngFor="let key of objectKeys(woerter)"> <span
-        [className]="woerter[key] ? 'd-inline-block badge badge-success' : 'd-inline-block badge  badge-danger'">{{key + ': ' + woerter[key]}}</span>
-      &nbsp;</span>
-  </div>
-
+  <hr>
 </div>

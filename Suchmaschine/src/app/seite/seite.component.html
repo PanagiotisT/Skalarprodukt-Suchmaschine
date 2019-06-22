@@ -1,26 +1,28 @@
+<!-- Seiten -->
 <div class="card mt-5 mb-5">
 
+  <!-- Seite1, Seite2 usw. -->
   <div class="card-header h5">
 
     <div class="row">
 
+      <!-- Links die Seite -->
       <div class="col-6">
         Seite: {{ seitenInfos.id + 1 }}
       </div>
 
+      <!-- Rechts die Trefferquote -->
       <div class="col-6 text-right">
-        <!-- Rechts die Trefferquote -->
         <span class="textEffect">{{ seitenInfos.uebereinstimumng }}%</span>
       </div>
 
-    </div>
+    </div>  
   </div>
 
+  <!-- Seiteninhalt -->
   <div class="card-body row">
 
-    <!-- Linke Seite der Karte: Seite x und der Inhalt -->
     <div class="col-10">
-      <h5 class="card-title"></h5>
       <h6 class="card-subtitle mb-2 text-muted">SeitenInhalt:</h6>
       <p class="card-text">{{ seitenInfos.inhalt }}</p>
     </div>

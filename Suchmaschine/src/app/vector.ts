@@ -14,13 +14,9 @@ export class Vector {
     // Länge der Vektoren vergleichen
     checkLength(v1: Vector, v2: Vector) {
         if(v1.values.length == v2.values.length){
-            console.log('Vektoren sind gleichlang!')
             return true
-        }else if(v1.values.length > v2.values.length){
-            console.log('Vektor 2 hat eine andere Dimension als Vektor 1')
-        }else {
-            console.log('Vektor 1 hat eine andere Dimension als Vektor 2')
-            return false
+        }else{
+            return false;
         }
     }
 
@@ -44,11 +40,11 @@ export class Vector {
 
         // Teile der Funktion berechnen
         let skalar = this.skalarprodukt(v1, v2)
-        console.log(skalar)
+        // console.log(skalar)
         let betragv1 = Math.sqrt(v1.laenge())
-        console.log(betragv1)
+        // console.log(betragv1)
         let betragv2 = Math.sqrt(v2.laenge())
-        console.log(betragv2)
+        // console.log(betragv2)
 
         // Wenn beide Vektoren gleichgroß sind den Winkel berechnen
         if(this.checkLength(v1,v2)){
@@ -57,8 +53,9 @@ export class Vector {
 
             // Radiant umwandeln in grad wenn ergebniss NaN ist 0 zurück geben = kein treffer
             // Ansonsten rechne cos von dem Winkel aus = Trefferquote
+            console.log(this.toDegree(Math.acos(angle)))
             if (Number.isNaN(this.toDegree(Math.acos(angle)))){
-                return 0;
+                return 100;
             }else{
                let winkel = Math.acos(angle)
                return Number(Math.cos(winkel).toFixed(2)) * 100
