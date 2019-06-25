@@ -87,7 +87,6 @@ export class HauptteilComponent implements OnInit {
           this.indexArray.push(wort)
         }
       })
-
     })
 
     // Alle Seiten nochmal durchgehen um einen Vektor für jede Seite zu erstellen.
@@ -161,7 +160,6 @@ export class HauptteilComponent implements OnInit {
         })
 
         console.log(vektorparameter)
-
         console.log(this.vectorArray)
       }
 
