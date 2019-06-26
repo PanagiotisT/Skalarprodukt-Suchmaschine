@@ -187,7 +187,6 @@ export class HauptteilComponent implements OnInit {
       
       //Winkel zwischen Suchvektor und Seitenvektoren berechnen und Seiten sortieren
 
-
       // Wenn nichts in der Sucheingabe steht zeig auch keine woerter an in der detail komponente
       // isEmpty wid übergeben an showDetails. 
       // Sonst zeigt er ein roten/Grünen Pixel an wenn man seine eingabe löscht weil "" im array noch steht
@@ -207,9 +206,6 @@ export class HauptteilComponent implements OnInit {
 
     // Alle Seitenvektoren durchgehen
     this.vectorArray.forEach((vektor, i) => {
-      // let without = []
-      // without = [...vektor]
-      // without.pop();
       // Winkel zwischen Suchvektor und Seitenvektor ausrechnen
       // Destso kleiner der Winkel destso höher die Übereinstimmung
       let uebereinstimung = this.vector.getAngle(this.suchanfragenVektor, new Vector(vektor))

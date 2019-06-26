@@ -21,7 +21,7 @@ export class ShowDetailsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.anzeigen = true
+    this.anzeigen = false
   }
 
   switchAnzeigen() {
