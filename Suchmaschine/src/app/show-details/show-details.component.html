@@ -19,7 +19,7 @@
     <div class="col-xs-12 col-lg-6 mt-2">
       <!--  2 Span um Problem zu lösen, dass kein whitespace zwischen den badges ist -->
       <!-- Mit woerter[key] value anzeigen -->
-      <div  *ngIf="!isEmpty" >
+      <div *ngIf="!isEmpty">
         <span *ngFor="let key of objectKeys(woerter)"> <span
             [className]="woerter[key] ? 'd-inline-block badge badge-success' : 'd-inline-block badge  badge-danger'">{{key}}</span>
           &nbsp;</span>

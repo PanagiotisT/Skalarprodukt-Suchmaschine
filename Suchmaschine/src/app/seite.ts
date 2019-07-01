@@ -3,4 +3,6 @@ export class Seite {
     inhalt: string
 
     uebereinstimumng: number
+
+    url: string
 }

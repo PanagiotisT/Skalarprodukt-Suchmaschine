@@ -3,8 +3,7 @@ import { Vector } from '../vector';
 import { ShowDetailsComponent } from '../show-details/show-details.component'
 
 import { Seite } from '../seite';
-import { SEITE } from '../seiten';
-import { Key } from 'protractor';
+import { SEITEN } from '../seiten';
 
 @Component({
   selector: 'app-hauptteil',
@@ -15,7 +14,7 @@ export class HauptteilComponent implements OnInit {
   @ViewChild(ShowDetailsComponent) child: ShowDetailsComponent;
 
   // Beispielseiten
-  seiten: Seite[] = SEITE
+  seiten: Seite[] = SEITEN
   // Seiten Sortiert nach Übereinstimmung
   byTreffer: Seite[]
 
@@ -27,7 +26,7 @@ export class HauptteilComponent implements OnInit {
   isEmpty: boolean
 
   // Überprüfen ob searchquery symbole enthält wie z.b ?!,:; etc.. Falls ja Symbole entfernen
-  symbole = ['\\?', '!', ',', ';', '  ', '\\.']
+  symbole = ['\\?', '!', ',', ';', '  ', '\\.', '\\(', '\\)']
 
   // Suchanfrage Vektor
   suchanfragenVektor: Vector
@@ -69,7 +68,7 @@ export class HauptteilComponent implements OnInit {
       let inhaltCleaned = this.containsSymbol(seite.inhalt.toLowerCase(), this.symbole)
 
       // Seiteninhalt in einzelne Wörter umwandeln und in array packen wenn sie noch nicht drin sind
-      let inhaltSplitted = inhaltCleaned.trim().replace("/"," ").split(" ")
+      let inhaltSplitted = inhaltCleaned.trim().replace("/", " ").split(" ")
       // Seiteninhalte speichern für späteren zugriff
       this.seitenInhalte.push(inhaltSplitted)
 
@@ -118,87 +117,91 @@ export class HauptteilComponent implements OnInit {
   // Wird aufgerufen sobald eine neue Usereingabe stattfindet
   searchqueryUpdate() {
 
-      // Speichere "sauberen" searchquery in eine neue variable
-      this.cleanSearchquery = this.containsSymbol(this.searchquery.toLowerCase(), this.symbole)
+    // Speichere "sauberen" searchquery in eine neue variable
+    this.cleanSearchquery = this.containsSymbol(this.searchquery.toLowerCase(), this.symbole)
 
-      // Alle eingegebenen Wörter werden in einem string array gespeichert
-      this.woerter = this.cleanSearchquery.trim().split(" ")
+    // Alle eingegebenen Wörter werden in einem string array gespeichert
+    this.woerter = this.cleanSearchquery.trim().split(" ")
 
-      console.log(this.woerter)
+    console.log(this.woerter)
 
-      // Vektor für die Suchanfrage erstellen
-      let vektorparameter = []
+    // Vektor für die Suchanfrage erstellen
+    let vektorparameter = []
 
-      // Überprüfe Ob eingegebene Wörter im IndexArray stehen
-      // Wenn ja schreibe eine 1 an die Stelle ansonsten eine 0
-      this.indexArray.forEach((wort) => {
-        if (this.woerter.includes(wort)) {
-          vektorparameter.push(1)
-        } else {
-          vektorparameter.push(0)
-        }
-      })
-      vektorparameter.push(0)
-
-      if(this.woerter.length >= 3){
-        console.log("Mehr als drei suche ob worter hintereinander auftreten")
-
-        // Überprüfe ob die Sucheingabe 1 zu 1 auf einer Seite enthalten ist
-        let satz = ""
-        this.woerter.forEach((wort) => {
-          satz += wort + " ";
-        })
-
-        this.seiten.forEach ( (seite) => {
-          if(seite.inhalt.toLowerCase().includes(satz)){
-            console.log(seite.id + " enthält den satz " + satz)
-            this.vectorArray[seite.id][this.vectorArray[seite.id].length-1] = 5
-            vektorparameter[vektorparameter.length-1] = 5
-          }else{
-            this.vectorArray[seite.id][this.vectorArray[seite.id].length-1] = 0
-          }
-        })
-
-        console.log(vektorparameter)
-        console.log(this.vectorArray)
+    // Überprüfe Ob eingegebene Wörter im IndexArray stehen
+    // Wenn ja schreibe eine 1 an die Stelle ansonsten eine 0
+    this.indexArray.forEach((wort) => {
+      if (this.woerter.includes(wort)) {
+        vektorparameter.push(1)
+      } else {
+        vektorparameter.push(0)
       }
+    })
+    vektorparameter.push(0)
 
-      //Erstelle einen Vektor für die Suchanfrage
-      this.suchanfragenVektor = new Vector(vektorparameter)
-      console.log(this.suchanfragenVektor)
+    if (this.woerter.length >= 3) {
+      console.log("Mehr als drei suche ob worter hintereinander auftreten")
 
-      // Falls alle Wörter gelöscht wurden losche das "" aus dem array
-      if(this.woerter.includes("")){
-        this.woerter.pop();
-      }
-
-      // Überprüfe welches eingegebene wort im index existiert
-      let test = []
+      // Überprüfe ob die Sucheingabe 1 zu 1 auf einer Seite enthalten ist
+      let satz = ""
       this.woerter.forEach((wort) => {
-        if (this.indexArray.includes(wort)) {
-          test[wort] = true
-        } else if(!this.indexArray.includes(wort)){
-          test[wort] = false
+        satz += wort + " ";
+      })
+
+      this.seiten.forEach((seite) => {
+        if (seite.inhalt.toLowerCase().includes(satz)) {
+          console.log(seite.id + " enthält den satz " + satz)
+          this.vectorArray[seite.id][this.vectorArray[seite.id].length - 1] = 5
+          vektorparameter[vektorparameter.length - 1] = 5
+        } else {
+          this.vectorArray[seite.id][this.vectorArray[seite.id].length - 1] = 0
         }
       })
-      this.woerterAnzeigen = test
 
-      console.log(this.woerterAnzeigen)
-      
-      //Winkel zwischen Suchvektor und Seitenvektoren berechnen und Seiten sortieren
+      console.log(vektorparameter)
+      console.log(this.vectorArray)
+    }
 
-      // Wenn nichts in der Sucheingabe steht zeig auch keine woerter an in der detail komponente
-      // isEmpty wid übergeben an showDetails. 
-      // Sonst zeigt er ein roten/Grünen Pixel an wenn man seine eingabe löscht weil "" im array noch steht
-      if(Object.keys(this.woerterAnzeigen).length != 0){
-        this.isEmpty = false;
-        this.sortSites()
-      }else{
-        this.isEmpty = true;
-        this.seiten.forEach( (seite) => {
-            seite.uebereinstimumng = 0;
-        })
+    //Erstelle einen Vektor für die Suchanfrage
+    this.suchanfragenVektor = new Vector(vektorparameter)
+    console.log(this.suchanfragenVektor)
+
+    // Falls alle Wörter gelöscht wurden losche das "" aus dem array
+    if (this.woerter.includes("")) {
+      this.woerter.pop();
+    }
+
+    // Überprüfe welches eingegebene wort im index existiert
+    let test = []
+    this.woerter.forEach((wort) => {
+      if (this.indexArray.includes(wort)) {
+        test[wort] = true
+      } else if (!this.indexArray.includes(wort)) {
+        test[wort] = false
       }
+    })
+    this.woerterAnzeigen = test
+
+    console.log(this.woerterAnzeigen)
+
+    //Winkel zwischen Suchvektor und Seitenvektoren berechnen und Seiten sortieren
+
+    // Wenn nichts in der Sucheingabe steht zeig auch keine woerter an in der detail komponente
+    // isEmpty wid übergeben an showDetails. 
+    // Sonst zeigt er ein roten/Grünen Pixel an wenn man seine eingabe löscht weil "" im array noch steht
+    if (Object.keys(this.woerterAnzeigen).length != 0) {
+      this.isEmpty = false
+      this.sortSites()
+    } else {
+      this.isEmpty = true
+      this.seiten.forEach((seite) => {
+        seite.uebereinstimumng = 0
+      })
+
+      // sortSites nach index
+      this.sortSitesIndex()
+
+    }
   }
 
   sortSites() {
@@ -216,7 +219,7 @@ export class HauptteilComponent implements OnInit {
       // Wenn Suchvektor 0 ist dann schreibe null in die Übreinstimmung
       // Ansonsten schreibe die übreinstimmung in die jeweilige Seite
       if (Number.isNaN(uebereinstimung)) {
-        //this.seiten[i].uebereinstimumng = 0
+        this.seiten[i].uebereinstimumng = 0
       } else {
         this.seiten[i].uebereinstimumng = Number(uebereinstimung.toFixed(2))
       }
@@ -225,11 +228,18 @@ export class HauptteilComponent implements OnInit {
     // Sortiere die Seiten nach der Übereinstimmung
     // Je höher die Übereinstimmung destso höher ist die Seite
     this.byTreffer.sort((a, b) => {
-      return a.uebereinstimumng > b.uebereinstimumng ? -1 : b.uebereinstimumng > a.uebereinstimumng ? 1 : 0;
+      return a.uebereinstimumng > b.uebereinstimumng ? -1 : b.uebereinstimumng > a.uebereinstimumng ? 1 : 0
     })
 
     // Überschreibe die Seiten mit dem Sortierten Seiten
     console.log(this.byTreffer)
+  }
+
+  sortSitesIndex() {
+    this.byTreffer.sort((a, b) => {
+      return a.id < b.id ? -1 : b.id > a.id ? 1 : 0
+    })
+
   }
 
   // Diese Funktion entfernt Symbole wie z.B ?, !, . , ; usw. aus dem searchquery 
