@@ -26,7 +26,8 @@ export class HauptteilComponent implements OnInit {
   isEmpty: boolean
 
   // Überprüfen ob searchquery symbole enthält wie z.b ?!,:; etc.. Falls ja Symbole entfernen
-  symbole = ['\\?', '!', ',', ';', '  ', '\\.', '\\(', '\\)']
+  symbole = ['\\?', '!', ',', ';', '  ', '\\.', '\\(', '\\)', '\\/', '\\-']
+  fillerWoerter: string[]
 
   // Suchanfrage Vektor
   suchanfragenVektor: Vector
@@ -49,6 +50,8 @@ export class HauptteilComponent implements OnInit {
   ngOnInit() {
 
     // Variablen initialisieren
+    this.fillerWoerter = ["ist", "wie", "gut", "kleinere", "geht", "es", "um", "diesem", "in", "um", "der", "die", "das", "es", "aber", "abermals", "ähnlich", "allein", "allem Anschein nach", "allemal", "allenfalls", "allenthalben", "allerdings", "allesamt", "allgemein", "allmählich", "allzu", "also", "alt", "an sich", "andauernd", "andererseits", "andernfalls", "anscheinend", "auch", "auffallend", "aufgrund", "aufs Neue", "augenscheinlich", "ausdrücklich", "außerdem", "ausgerechnet", "ausnahmslos", "bald", "bei Weitem", "beide", "beiden", "beiderlei", "beides", "beinahe", "bekanntlich", "bereits", "besonders", "besser", "bestenfalls", "bestimmt", "beträchtlich", "bevor", "bezüglich", "bisher", "bislang", "bloß", "da", "dabei", "dadurch", "dafür", "dagegen", "daher", "dahin", "damals", "damit", "danach", "daneben", "dank", "dann", "dann", "und", "wann", "daran", "darauf", "daraus", "darin", "darum", "davon", "davor", "dazu", "demgegenüber", "demgemäß", "demnach", "demselben", "denn", "dennoch", "derart", "derartig", "des Öfteren", "deshalb", "desto", "desungeachtet", "deswegen", "diesmal", "direkt", "direkte", "direkten", "direkter", "doch", "durchaus", "durchweg", "eben", "ebenfalls", "ebenso", "ehe", "eher", "eigenen", "eigenes", "eigentlich", "ein bisschen", "ein wenig", "einerseits", "einfach", "einige", "einigermaßen", "einmal", "entsprechend", "erst", "etliche", "etwa", "etwas", "fast", "förmlich", "freilich", "ganz", "ganz und gar", "gänzlich", "gar", "gar nicht", "gefälligst", "gelegentlich", "gemeinhin", "genau", "genug", "geradezu", "gern", "gewiss", "gewisse", "gewissermaßen", "glatt", "gleich", "gleichsam", "gleichwohl", "gleichzeitig", "glücklicherweise", "größtenteils", "halt", "hätte", "häufig", "herein", "hier und da", "hiermit", "hiesige", "hingegen", "hinlänglich", "hinterher", "höchst", "höchstens", "im Allgemeinen", "im Grunde", "genommen", "im", "Prinzip", "immer", "immerhin", "immerzu", "in der Tat", "in diesem Zusammenhang", "indessen", "infolge", "infolgedessen", "innen", "innerhalb", "insbesondere", "insofern", "inzwischen", "irgend", "irgendein", "irgendeine", "irgendjemand", "irgendwann", "irgendwas", "irgendwen", "irgendwer", "irgendwie", "irgendwo", "ja", "je", "jedenfalls", "jedoch", "jemals", "jetzt", "kaum", "keinesfalls", "keineswegs", "konkret", "konkrete", "konkreten", "konkreter", "konkretes", "künftig", "könnte", "längst", "längstens", "lassen", "lediglich", "leider", "letztendlich", "letztlich", "mal", "mancherorts", "manches", "manchmal", "mehr oder weniger", "mehrfach", "meines Erachtens", "meinetwegen", "meist", "meistens", "meistenteils", "mindestens", "mithin", "mitunter", "möglich", "mögliche", "möglichen", "möglicher", "möglicherweise", "möglichst", "nämlich", "naturgemäß", "natürlich", "neuerdings", "neuerlich", "neulich", "nichtsdestotrotz", "nichtsdestoweniger", "nötigenfalls", "nun", "nunmehr", "oder", "offenbar", "offenkundig", "offensichtlich", "oft", "ohne Weiteres", "ohne Zweifel", "ohnedies", "partout", "persönlich", "plötzlich", "praktisch", "quasi", "recht", "reichlich", "reiflich", "relativ", "restlos", "richtiggehend", "riesig", "rundheraus", "rundum", "samt", "samt und sonders", "sämtliche", "sattsam", "schlicht", "schlichtweg", "schließlich", "schlussendlich", "schon", "schwerlich", "sehr", "selber", "selbst", "selbstredend", "selbstverständlich", "selten", "seltsamerweise", "sicher", "sicherlich", "so", "sogar", "sonst", "sowieso", "sowohl als auch", "sozusagen", "stellenweise", "stets", "tatsächlich", "tatsächlichen", "tatsächlicher", "tatsächliches", "total", "trotzdem", "überaus", "überdies", "überhaupt", "übrigens", "umständehalber", "unbedingt", "ungemein", "vergleichsweise", "vermutlich", "vielfach", "vielleicht", "voll", "voll und ganz", "vollends", "völlig", "vollkommen", "vollständig", "von Neuem", "wahrscheinlich", "weitem", "weiter", "weitere", "weiterem", "weiteren", "weiterer", "weiteres", "weiterhin", "weitgehend", "welche", "welchem", "welchen", "welcher", "wenig", "wenige", "weniger", "wenigstens", "wenn", "wenngleich", "weshalb", "wieder", "wiederum", "wiewohl", "wirklich", "wodurch", "wogegen", "woher", "wohin", "wohingegen", "wohl", "wohlgemerkt", "wohlweislich", "wollen", "wollt", "wollte", "wollten", "wolltest", "wolltet", "womit", "womöglich", "woraufhin", "woraus", "worin", "wurde", "würden", "zahlreich", "zeitweise", "ziemlich", "zudem", "zugegeben", "zumeist", "zusehends", "zusehens", "zuweilen", "zwar", "zweifellos", "zweifelsfrei", "zweifelsohne"]
+
     this.isEmpty = true
     this.indexArray = []
     this.seitenInhalte = []
@@ -67,8 +70,27 @@ export class HauptteilComponent implements OnInit {
       // Symbole aus den Wörtern entfernen in diesem Fall , und .
       let inhaltCleaned = this.containsSymbol(seite.inhalt.toLowerCase(), this.symbole)
 
+
+      /////////////////////////////////////////////////////////////////
+      // Wieso geht das nicht=?
+      // inhaltCleaned.replace(new RegExp(".\\/.", 'g'), ' ')
+      // inhaltCleaned.replace(new RegExp(".\\-.", 'g'), ' ')
+
+      console.log(inhaltCleaned)
+
+      //////////////////////////////////////////////////////////////
+
       // Seiteninhalt in einzelne Wörter umwandeln und in array packen wenn sie noch nicht drin sind
-      let inhaltSplitted = inhaltCleaned.trim().replace("/", " ").split(" ")
+      let inhaltSplitted = inhaltCleaned.trim().split(" ")
+
+      console.log(inhaltSplitted)
+
+      //Seiteninhalet filtern von füllwörtern
+      this.fillerWoerter.forEach((wort) => {
+        inhaltSplitted = inhaltSplitted.filter(e => e !== wort);
+      })
+
+      console.log(inhaltSplitted)
       // Seiteninhalte speichern für späteren zugriff
       this.seitenInhalte.push(inhaltSplitted)
 
@@ -200,7 +222,6 @@ export class HauptteilComponent implements OnInit {
 
       // sortSites nach index
       this.sortSitesIndex()
-
     }
   }
 
@@ -239,7 +260,6 @@ export class HauptteilComponent implements OnInit {
     this.byTreffer.sort((a, b) => {
       return a.id < b.id ? -1 : b.id > a.id ? 1 : 0
     })
-
   }
 
   // Diese Funktion entfernt Symbole wie z.B ?, !, . , ; usw. aus dem searchquery 
@@ -250,7 +270,7 @@ export class HauptteilComponent implements OnInit {
 
       pattern.forEach((element) => {
         // Wenn eins der Symbole ethalten ist entferne es
-        target = target.replace(new RegExp(element, 'g'), '')
+        target = target.replace(new RegExp(element, 'g'), ' ')
       });
       return target
     }
