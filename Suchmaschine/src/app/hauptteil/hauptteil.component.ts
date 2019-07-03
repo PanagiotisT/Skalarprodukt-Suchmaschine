@@ -27,7 +27,7 @@ export class HauptteilComponent implements OnInit {
 
   // Überprüfen ob searchquery symbole enthält wie z.b ?!,:; etc.. Falls ja Symbole entfernen
   symbole = ['\\?', '!', ',', ';', '  ', '\\.', '\\(', '\\)', '\\/', '\\-']
-  fillerWoerter: string[]
+  filterWoerter: string[]
 
   // Suchanfrage Vektor
   suchanfragenVektor: Vector
@@ -50,7 +50,7 @@ export class HauptteilComponent implements OnInit {
   ngOnInit() {
 
     // Variablen initialisieren
-    this.fillerWoerter = ["ist", "wie", "gut", "kleinere", "geht", "es", "um", "diesem", "in", "um", "der", "die", "das", "es", "aber", "abermals", "ähnlich", "allein", "allem Anschein nach", "allemal", "allenfalls", "allenthalben", "allerdings", "allesamt", "allgemein", "allmählich", "allzu", "also", "alt", "an sich", "andauernd", "andererseits", "andernfalls", "anscheinend", "auch", "auffallend", "aufgrund", "aufs Neue", "augenscheinlich", "ausdrücklich", "außerdem", "ausgerechnet", "ausnahmslos", "bald", "bei Weitem", "beide", "beiden", "beiderlei", "beides", "beinahe", "bekanntlich", "bereits", "besonders", "besser", "bestenfalls", "bestimmt", "beträchtlich", "bevor", "bezüglich", "bisher", "bislang", "bloß", "da", "dabei", "dadurch", "dafür", "dagegen", "daher", "dahin", "damals", "damit", "danach", "daneben", "dank", "dann", "dann", "und", "wann", "daran", "darauf", "daraus", "darin", "darum", "davon", "davor", "dazu", "demgegenüber", "demgemäß", "demnach", "demselben", "denn", "dennoch", "derart", "derartig", "des Öfteren", "deshalb", "desto", "desungeachtet", "deswegen", "diesmal", "direkt", "direkte", "direkten", "direkter", "doch", "durchaus", "durchweg", "eben", "ebenfalls", "ebenso", "ehe", "eher", "eigenen", "eigenes", "eigentlich", "ein bisschen", "ein wenig", "einerseits", "einfach", "einige", "einigermaßen", "einmal", "entsprechend", "erst", "etliche", "etwa", "etwas", "fast", "förmlich", "freilich", "ganz", "ganz und gar", "gänzlich", "gar", "gar nicht", "gefälligst", "gelegentlich", "gemeinhin", "genau", "genug", "geradezu", "gern", "gewiss", "gewisse", "gewissermaßen", "glatt", "gleich", "gleichsam", "gleichwohl", "gleichzeitig", "glücklicherweise", "größtenteils", "halt", "hätte", "häufig", "herein", "hier und da", "hiermit", "hiesige", "hingegen", "hinlänglich", "hinterher", "höchst", "höchstens", "im Allgemeinen", "im Grunde", "genommen", "im", "Prinzip", "immer", "immerhin", "immerzu", "in der Tat", "in diesem Zusammenhang", "indessen", "infolge", "infolgedessen", "innen", "innerhalb", "insbesondere", "insofern", "inzwischen", "irgend", "irgendein", "irgendeine", "irgendjemand", "irgendwann", "irgendwas", "irgendwen", "irgendwer", "irgendwie", "irgendwo", "ja", "je", "jedenfalls", "jedoch", "jemals", "jetzt", "kaum", "keinesfalls", "keineswegs", "konkret", "konkrete", "konkreten", "konkreter", "konkretes", "künftig", "könnte", "längst", "längstens", "lassen", "lediglich", "leider", "letztendlich", "letztlich", "mal", "mancherorts", "manches", "manchmal", "mehr oder weniger", "mehrfach", "meines Erachtens", "meinetwegen", "meist", "meistens", "meistenteils", "mindestens", "mithin", "mitunter", "möglich", "mögliche", "möglichen", "möglicher", "möglicherweise", "möglichst", "nämlich", "naturgemäß", "natürlich", "neuerdings", "neuerlich", "neulich", "nichtsdestotrotz", "nichtsdestoweniger", "nötigenfalls", "nun", "nunmehr", "oder", "offenbar", "offenkundig", "offensichtlich", "oft", "ohne Weiteres", "ohne Zweifel", "ohnedies", "partout", "persönlich", "plötzlich", "praktisch", "quasi", "recht", "reichlich", "reiflich", "relativ", "restlos", "richtiggehend", "riesig", "rundheraus", "rundum", "samt", "samt und sonders", "sämtliche", "sattsam", "schlicht", "schlichtweg", "schließlich", "schlussendlich", "schon", "schwerlich", "sehr", "selber", "selbst", "selbstredend", "selbstverständlich", "selten", "seltsamerweise", "sicher", "sicherlich", "so", "sogar", "sonst", "sowieso", "sowohl als auch", "sozusagen", "stellenweise", "stets", "tatsächlich", "tatsächlichen", "tatsächlicher", "tatsächliches", "total", "trotzdem", "überaus", "überdies", "überhaupt", "übrigens", "umständehalber", "unbedingt", "ungemein", "vergleichsweise", "vermutlich", "vielfach", "vielleicht", "voll", "voll und ganz", "vollends", "völlig", "vollkommen", "vollständig", "von Neuem", "wahrscheinlich", "weitem", "weiter", "weitere", "weiterem", "weiteren", "weiterer", "weiteres", "weiterhin", "weitgehend", "welche", "welchem", "welchen", "welcher", "wenig", "wenige", "weniger", "wenigstens", "wenn", "wenngleich", "weshalb", "wieder", "wiederum", "wiewohl", "wirklich", "wodurch", "wogegen", "woher", "wohin", "wohingegen", "wohl", "wohlgemerkt", "wohlweislich", "wollen", "wollt", "wollte", "wollten", "wolltest", "wolltet", "womit", "womöglich", "woraufhin", "woraus", "worin", "wurde", "würden", "zahlreich", "zeitweise", "ziemlich", "zudem", "zugegeben", "zumeist", "zusehends", "zusehens", "zuweilen", "zwar", "zweifellos", "zweifelsfrei", "zweifelsohne"]
+    this.filterWoerter = ['ein', 'ist', 'wie', 'gut', 'kleinere', 'geht', 'es', 'um', 'diesem', 'in', 'um', 'der', 'die', 'das', 'es', 'aber', 'abermals', 'ähnlich', 'allein', 'allem Anschein nach', 'allemal', 'allenfalls', 'allenthalben', 'allerdings', 'allesamt', 'allgemein', 'allmählich', 'allzu', 'also', 'alt', 'an sich', 'andauernd', 'andererseits', 'andernfalls', 'anscheinend', 'auch', 'auffallend', 'aufgrund', 'aufs Neue', 'augenscheinlich', 'ausdrücklich', 'außerdem', 'ausgerechnet', 'ausnahmslos', 'bald', 'bei Weitem', 'beide', 'beiden', 'beiderlei', 'beides', 'beinahe', 'bekanntlich', 'bereits', 'besonders', 'besser', 'bestenfalls', 'bestimmt', 'beträchtlich', 'bevor', 'bezüglich', 'bisher', 'bislang', 'bloß', 'da', 'dabei', 'dadurch', 'dafür', 'dagegen', 'daher', 'dahin', 'damals', 'damit', 'danach', 'daneben', 'dank', 'dann', 'dann', 'und', 'wann', 'daran', 'darauf', 'daraus', 'darin', 'darum', 'davon', 'davor', 'dazu', 'demgegenüber', 'demgemäß', 'demnach', 'demselben', 'denn', 'dennoch', 'derart', 'derartig', 'des Öfteren', 'deshalb', 'desto', 'desungeachtet', 'deswegen', 'diesmal', 'direkt', 'direkte', 'direkten', 'direkter', 'doch', 'durchaus', 'durchweg', 'eben', 'ebenfalls', 'ebenso', 'ehe', 'eher', 'eigenen', 'eigenes', 'eigentlich', 'ein bisschen', 'ein wenig', 'einerseits', 'einfach', 'einige', 'einigermaßen', 'einmal', 'entsprechend', 'erst', 'etliche', 'etwa', 'etwas', 'fast', 'förmlich', 'freilich', 'ganz', 'ganz und gar', 'gänzlich', 'gar', 'gar nicht', 'gefälligst', 'gelegentlich', 'gemeinhin', 'genau', 'genug', 'geradezu', 'gern', 'gewiss', 'gewisse', 'gewissermaßen', 'glatt', 'gleich', 'gleichsam', 'gleichwohl', 'gleichzeitig', 'glücklicherweise', 'größtenteils', 'halt', 'hätte', 'häufig', 'herein', 'hier und da', 'hiermit', 'hiesige', 'hingegen', 'hinlänglich', 'hinterher', 'höchst', 'höchstens', 'im Allgemeinen', 'im Grunde', 'genommen', 'im', 'Prinzip', 'immer', 'immerhin', 'immerzu', 'in der Tat', 'in diesem Zusammenhang', 'indessen', 'infolge', 'infolgedessen', 'innen', 'innerhalb', 'insbesondere', 'insofern', 'inzwischen', 'irgend', 'irgendein', 'irgendeine', 'irgendjemand', 'irgendwann', 'irgendwas', 'irgendwen', 'irgendwer', 'irgendwie', 'irgendwo', 'ja', 'je', 'jedenfalls', 'jedoch', 'jemals', 'jetzt', 'kaum', 'keinesfalls', 'keineswegs', 'konkret', 'konkrete', 'konkreten', 'konkreter', 'konkretes', 'künftig', 'könnte', 'längst', 'längstens', 'lassen', 'lediglich', 'leider', 'letztendlich', 'letztlich', 'mal', 'mancherorts', 'manches', 'manchmal', 'mehr oder weniger', 'mehrfach', 'meines Erachtens', 'meinetwegen', 'meist', 'meistens', 'meistenteils', 'mindestens', 'mithin', 'mitunter', 'möglich', 'mögliche', 'möglichen', 'möglicher', 'möglicherweise', 'möglichst', 'nämlich', 'naturgemäß', 'natürlich', 'neuerdings', 'neuerlich', 'neulich', 'nichtsdestotrotz', 'nichtsdestoweniger', 'nötigenfalls', 'nun', 'nunmehr', 'oder', 'offenbar', 'offenkundig', 'offensichtlich', 'oft', 'ohne Weiteres', 'ohne Zweifel', 'ohnedies', 'partout', 'persönlich', 'plötzlich', 'praktisch', 'quasi', 'recht', 'reichlich', 'reiflich', 'relativ', 'restlos', 'richtiggehend', 'riesig', 'rundheraus', 'rundum', 'samt', 'samt und sonders', 'sämtliche', 'sattsam', 'schlicht', 'schlichtweg', 'schließlich', 'schlussendlich', 'schon', 'schwerlich', 'sehr', 'selber', 'selbst', 'selbstredend', 'selbstverständlich', 'selten', 'seltsamerweise', 'sicher', 'sicherlich', 'so', 'sogar', 'sonst', 'sowieso', 'sowohl als auch', 'sozusagen', 'stellenweise', 'stets', 'tatsächlich', 'tatsächlichen', 'tatsächlicher', 'tatsächliches', 'total', 'trotzdem', 'überaus', 'überdies', 'überhaupt', 'übrigens', 'umständehalber', 'unbedingt', 'ungemein', 'vergleichsweise', 'vermutlich', 'vielfach', 'vielleicht', 'voll', 'voll und ganz', 'vollends', 'völlig', 'vollkommen', 'vollständig', 'von Neuem', 'wahrscheinlich', 'weitem', 'weiter', 'weitere', 'weiterem', 'weiteren', 'weiterer', 'weiteres', 'weiterhin', 'weitgehend', 'welche', 'welchem', 'welchen', 'welcher', 'wenig', 'wenige', 'weniger', 'wenigstens', 'wenn', 'wenngleich', 'weshalb', 'wieder', 'wiederum', 'wiewohl', 'wirklich', 'wodurch', 'wogegen', 'woher', 'wohin', 'wohingegen', 'wohl', 'wohlgemerkt', 'wohlweislich', 'wollen', 'wollt', 'wollte', 'wollten', 'wolltest', 'wolltet', 'womit', 'womöglich', 'woraufhin', 'woraus', 'worin', 'wurde', 'würden', 'zahlreich', 'zeitweise', 'ziemlich', 'zudem', 'zugegeben', 'zumeist', 'zusehends', 'zusehens', 'zuweilen', 'zwar', 'zweifellos', 'zweifelsfrei', 'zweifelsohne']
 
     this.isEmpty = true
     this.indexArray = []
@@ -70,38 +70,21 @@ export class HauptteilComponent implements OnInit {
       // Symbole aus den Wörtern entfernen in diesem Fall , und .
       let inhaltCleaned = this.containsSymbol(seite.inhalt.toLowerCase(), this.symbole)
 
-
-      /////////////////////////////////////////////////////////////////
-      // Wieso geht das nicht=?
-      // inhaltCleaned.replace(new RegExp(".\\/.", 'g'), ' ')
-      // inhaltCleaned.replace(new RegExp(".\\-.", 'g'), ' ')
-
-      console.log(inhaltCleaned)
-
-      //////////////////////////////////////////////////////////////
-
       // Seiteninhalt in einzelne Wörter umwandeln und in array packen wenn sie noch nicht drin sind
-      let inhaltSplitted = inhaltCleaned.trim().split(" ")
-
-      console.log(inhaltSplitted)
+      let inhaltSplitted = inhaltCleaned.trim().split(' ')
 
       //Seiteninhalet filtern von füllwörtern
-      this.fillerWoerter.forEach((wort) => {
+      this.filterWoerter.forEach((wort) => {
         inhaltSplitted = inhaltSplitted.filter(e => e !== wort);
       })
 
       console.log(inhaltSplitted)
+
       // Seiteninhalte speichern für späteren zugriff
       this.seitenInhalte.push(inhaltSplitted)
 
-      // --------------------------
-      // Später nur Wörter im index speichern die Aussagekraft haben 
-      // also wörter wie z.b ist, was, und usw. weglassen
-      // --------------------------
-
-
       // Hier werden alle Wörter gespeichert die vorkommen aber nur einmal.
-      // Wenn das wort "Java" auf mehreren Seiten vorkommt, dann wird es nur einmal gespeichert im Index
+      // Wenn das wort 'Java' auf mehreren Seiten vorkommt, dann wird es nur einmal gespeichert im Index
       inhaltSplitted.forEach((wort) => {
         // Wenn das Wort noch nicht im Indexarray ist schreib es rein ansonsten mache nichts
         if (!this.indexArray.includes(wort)) {
@@ -139,11 +122,16 @@ export class HauptteilComponent implements OnInit {
   // Wird aufgerufen sobald eine neue Usereingabe stattfindet
   searchqueryUpdate() {
 
-    // Speichere "sauberen" searchquery in eine neue variable
+    // Speichere 'sauberen' searchquery in eine neue variable
     this.cleanSearchquery = this.containsSymbol(this.searchquery.toLowerCase(), this.symbole)
 
     // Alle eingegebenen Wörter werden in einem string array gespeichert
-    this.woerter = this.cleanSearchquery.trim().split(" ")
+    this.woerter = this.cleanSearchquery.trim().split(' ')
+
+    //Suchquery filtern
+    this.filterWoerter.forEach((wort) => {
+      this.woerter = this.woerter.filter(e => e !== wort);
+    })
 
     console.log(this.woerter)
 
@@ -162,23 +150,61 @@ export class HauptteilComponent implements OnInit {
     vektorparameter.push(0)
 
     if (this.woerter.length >= 3) {
-      console.log("Mehr als drei suche ob worter hintereinander auftreten")
+      console.log('Mehr als drei suche ob worter hintereinander auftreten')
 
       // Überprüfe ob die Sucheingabe 1 zu 1 auf einer Seite enthalten ist
-      let satz = ""
-      this.woerter.forEach((wort) => {
-        satz += wort + " ";
+      // KOMBIS wenn ein WOrt dazu kommt gibt es auch ein Kombi mehr
+      //3 Wörter 1 Kombi
+      // / 4 Wörter 2 Kmbis 
+      // 5 Wörter 3 Kombis also anzahl wörter minus 2 = anzahl kombinationen
+      let kombinationen = []
+
+      //Anzahl an durchgänge
+      let anzahl = this.woerter.length - 2;
+
+      for (let i = 0; i < anzahl; i++) {
+        let satz = ''
+
+        //LETZES LEERZEICHEN ENTFERNEN WENN MAN AM LETZTEN ELEMENT IST 
+        for (let j = 0; j < 3; j++) {
+          if (j <= 1)
+            satz += this.woerter[j + i] + ' '
+          else
+            satz += this.woerter[j + i]
+        }
+        kombinationen.push(satz)
+      }
+
+      console.log(kombinationen)
+
+      this.seitenInhalte.forEach((seite, i) => {
+        let inhaltAlsString = ''
+
+        seite.forEach((wort) => {
+          inhaltAlsString += wort + ' ';
+        })
+
+        kombinationen.forEach((kombi) => {
+          if (inhaltAlsString.toLowerCase().includes(kombi.toLowerCase())) {
+            this.vectorArray[i][this.vectorArray[i].length - 1] = 5
+            vektorparameter[vektorparameter.length - 1] = 5
+            return;
+          } else {
+            this.vectorArray[i][this.vectorArray[i].length - 1] = 0
+          }
+        })
       })
 
-      this.seiten.forEach((seite) => {
-        if (seite.inhalt.toLowerCase().includes(satz)) {
-          console.log(seite.id + " enthält den satz " + satz)
-          this.vectorArray[seite.id][this.vectorArray[seite.id].length - 1] = 5
-          vektorparameter[vektorparameter.length - 1] = 5
-        } else {
-          this.vectorArray[seite.id][this.vectorArray[seite.id].length - 1] = 0
-        }
-      })
+      // this.seiten.forEach((seite) => {
+      //   console.log(this.seitenInhalte)
+      //   if (seite.inhalt.toLowerCase().includes(satz.toLowerCase())) {
+      //     console.log(seite.id + ' enthält den satz ' + satz)
+      //     this.vectorArray[seite.id][this.vectorArray[seite.id].length - 1] = 5
+      //     vektorparameter[vektorparameter.length - 1] = 5
+      //   } else {
+      //     this.vectorArray[seite.id][this.vectorArray[seite.id].length - 1] = 0
+      //   }
+      // })
 
       console.log(vektorparameter)
       console.log(this.vectorArray)
@@ -188,8 +214,8 @@ export class HauptteilComponent implements OnInit {
     this.suchanfragenVektor = new Vector(vektorparameter)
     console.log(this.suchanfragenVektor)
 
-    // Falls alle Wörter gelöscht wurden losche das "" aus dem array
-    if (this.woerter.includes("")) {
+    // Falls alle Wörter gelöscht wurden losche das '' aus dem array
+    if (this.woerter.includes('')) {
       this.woerter.pop();
     }
 
@@ -210,7 +236,7 @@ export class HauptteilComponent implements OnInit {
 
     // Wenn nichts in der Sucheingabe steht zeig auch keine woerter an in der detail komponente
     // isEmpty wid übergeben an showDetails. 
-    // Sonst zeigt er ein roten/Grünen Pixel an wenn man seine eingabe löscht weil "" im array noch steht
+    // Sonst zeigt er ein roten/Grünen Pixel an wenn man seine eingabe löscht weil '' im array noch steht
     if (Object.keys(this.woerterAnzeigen).length != 0) {
       this.isEmpty = false
       this.sortSites()
@@ -226,7 +252,7 @@ export class HauptteilComponent implements OnInit {
   }
 
   sortSites() {
-    console.log("Sort Sites aufgerufen")
+    console.log('Sort Sites aufgerufen')
 
     // Alle Seitenvektoren durchgehen
     this.vectorArray.forEach((vektor, i) => {
@@ -235,7 +261,7 @@ export class HauptteilComponent implements OnInit {
       let uebereinstimung = this.vector.getAngle(this.suchanfragenVektor, new Vector(vektor))
       console.log(uebereinstimung)
 
-      console.log("Seite" + i)
+      console.log('Seite' + i)
 
       // Wenn Suchvektor 0 ist dann schreibe null in die Übreinstimmung
       // Ansonsten schreibe die übreinstimmung in die jeweilige Seite
