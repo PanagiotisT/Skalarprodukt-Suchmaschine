@@ -42,9 +42,9 @@ export class Vector {
         // Teile der Funktion berechnen
         let skalar = this.skalarprodukt(v1, v2)
         // console.log(skalar)
-        let betragv1 = Math.sqrt(v1.laenge())
+        let betragv1 = v1.laenge()
         // console.log(betragv1)
-        let betragv2 = Math.sqrt(v2.laenge())
+        let betragv2 = v2.laenge()
         // console.log(betragv2)
 
         // Wenn beide Vektoren gleichgroß sind den Winkel berechnen
@@ -52,6 +52,7 @@ export class Vector {
             // Winkel berechnen; Ausgabe Radiant
             angle = skalar / (betragv1 * betragv2)
 
+            // console.log(angle)
             return Number(angle.toFixed(3)) * 100
         }
     }
@@ -63,7 +64,7 @@ export class Vector {
         for (let i = 0; i < this.values.length; i++) {
             betrag += this.values[i] * this.values[i]
         }
-        return betrag;
+        return Math.sqrt(betrag);
     }
 
     // Radiant ergebnis in degree umwandeln
